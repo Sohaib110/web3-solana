@@ -102,9 +102,12 @@
       async function connectWallet() {
           try {
               if (isMobile()) {
-                  // Set redirect URL to bring the user back after connecting
+                  // Redirect back to the original website after connection
                   const redirectUrl = encodeURIComponent(window.location.href);
-                  window.location.href = `https://phantom.app/ul/v1/connect?app_url=${redirectUrl}`;
+  
+                  // Phantom Mobile Deep Link for connecting
+                  window.location.href = `https://phantom.app/ul/v1/connect?app_url=${redirectUrl}&dapp_encryption_public_key=&cluster=mainnet-beta`;
+  
                   return;
               }
   
@@ -146,7 +149,6 @@
           });
       }
   
-      // Check if Phantom is installed
       if (window.solana && window.solana.isPhantom) {
           connectButton.addEventListener('click', async () => {
               if (!publicKey) {
@@ -171,9 +173,9 @@
       } else {
           connectButton.addEventListener('click', () => {
               if (isMobile()) {
-                  // Mobile connection using Universal Links
+                  // Mobile connection using Phantom Universal Link
                   const redirectUrl = encodeURIComponent(window.location.href);
-                  window.location.href = `https://phantom.app/ul/v1/connect?app_url=${redirectUrl}`;
+                  window.location.href = `https://phantom.app/ul/v1/connect?app_url=${redirectUrl}&cluster=mainnet-beta`;
               } else {
                   Swal.fire({
                       title: 'Phantom Wallet Not Found',
