@@ -28,18 +28,23 @@
 
 <body>
   <!-- Header -->
-  <nav class="navbar" id="navbar">
-    <div class="container">
-      <div class="logo">𐍆𐌹𐌽𐌹𐍄𐌴<sup>®</sup></div>
-      <div class="menu-btn" id="menu-btn">
-        <i class="fa-solid fa-bars"></i>
-      </div>
-      <div class="nav-menu" id="nav-menu">
-        <a href="#" id="connectbutton">Connect</a>
-        <a href="#" class="login"><img src="dex.png" class="dex" alt="dex">6LkA...i8Fh</a>
-      </div>
+ <nav class="navbar" id="navbar">
+  <div class="container">
+    <div class="logo">𐍆𐌹𐌽𐌹𐍄𐌴<sup>®</sup></div>
+    <div class="menu-btn" id="menu-btn">
+      <i class="fa-solid fa-bars"></i>
     </div>
-  </nav>
+    <div class="nav-menu" id="nav-menu">
+      <div class="close-btn" id="nav-close-btn">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+      <a href="#" id="connectbutton">Connect</a>
+      <a href="#" class="login"><img src="dex.png" class="dex" alt="dex">6LkA...i8Fh</a>
+      <a href="#" id="disconnectbutton">Disconnect</a>
+    </div>
+  </div>
+</nav>
+
 
   <div id="three-container" class="three-container">
     <model-viewer src="genesis.glb" scene-viewer quick-look" camera-controls tone-mapping="agx" poster="poster.webp" shadow-intensity="1.23" exposure="2" shadow-softness="1" auto-rotate autoplay> </model-viewer>

@@ -7,10 +7,28 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 
 // ===== NAVIGATION MENU =====
-const navbar = document.getElementById("navbar");
 const menuBtn = document.getElementById("menu-btn");
 const navMenu = document.getElementById("nav-menu");
+const navcloseBtn = document.getElementById("nav-close-btn");
 
+menuBtn.addEventListener("click", () => {
+  navMenu.classList.add("active");
+});
+
+navcloseBtn.addEventListener("click", () => {
+  navMenu.classList.remove("active");
+});
+
+// Close menu when clicking outside
+document.addEventListener("click", (e) => {
+  if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+    navMenu.classList.remove("active");
+  }
+});
+disconnectButton.addEventListener("click", () => {
+  disconnectWallet();
+  navMenu.classList.remove("active");
+});
 window.addEventListener("scroll", () => {
   if (window.scrollY > 10) {
     navbar.classList.add("scrolled");
