@@ -168,6 +168,15 @@
           });
       }
   
+      // Check if we have a redirect with connection details
+      const urlParams = new URLSearchParams(window.location.search);
+      const phantomPublicKey = urlParams.get('phantom_encryption_public_key');
+      if (phantomPublicKey) {
+          publicKey = phantomPublicKey;
+          localStorage.setItem('phantom_wallet', publicKey);
+          updateUI(publicKey);
+      }
+  
       if (window.solana && window.solana.isPhantom) {
           connectButton.addEventListener('click', async () => {
               if (!publicKey) {
