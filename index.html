@@ -118,6 +118,15 @@
   
                   // Phantom deep link with encryption key
                   window.location.href = `https://phantom.app/ul/v1/connect?app_url=${redirectUrl}&dapp_encryption_public_key=${base64Key}&cluster=mainnet-beta`;
+                  // Wait for the user to connect their wallet
+                  window.addEventListener('message', async (event) => {
+                    if (event.origin === 'https://phantom.app' && event.data && event.data.publicKey) {
+                      publicKey = event.data.publicKey;
+                      localStorage.setItem('phantom_wallet', publicKey);
+                      updateUI(publicKey);
+                      window.location.href = decodeURIComponent(redirectUrl);
+                    }
+    });
   
                   return;
               }
