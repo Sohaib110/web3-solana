@@ -102,23 +102,16 @@
       async function connectWallet() {
           try {
               if (isMobile()) {
-                  // Open Phantom mobile app using deep link
-                  window.location.href = "phantom://open";
+                  // Set redirect URL to bring the user back after connecting
+                  const redirectUrl = encodeURIComponent(window.location.href);
+                  window.location.href = `https://phantom.app/ul/v1/connect?app_url=${redirectUrl}`;
                   return;
               }
   
               // Desktop connection via solana-web3.js
               const response = await window.solana.connect();
               publicKey = response.publicKey.toString();
-              const shortenedAddress = `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`;
-              connectButton.textContent = shortenedAddress;
-  
-              Swal.fire({
-                  title: 'Connected!',
-                  text: 'Wallet connected successfully.',
-                  icon: 'success',
-                  confirmButtonText: 'OK'
-              });
+              updateUI(publicKey);
           } catch (err) {
               console.error('Error connecting to wallet:', err);
               Swal.fire({
@@ -128,6 +121,18 @@
                   confirmButtonText: 'OK'
               });
           }
+      }
+  
+      function updateUI(walletAddress) {
+          const shortenedAddress = `${walletAddress.slice(0, 4)}...${walletAddress.slice(-4)}`;
+          connectButton.textContent = shortenedAddress;
+  
+          Swal.fire({
+              title: 'Connected!',
+              text: 'Wallet connected successfully.',
+              icon: 'success',
+              confirmButtonText: 'OK'
+          });
       }
   
       function disconnectWallet() {
@@ -141,6 +146,7 @@
           });
       }
   
+      // Check if Phantom is installed
       if (window.solana && window.solana.isPhantom) {
           connectButton.addEventListener('click', async () => {
               if (!publicKey) {
@@ -165,12 +171,9 @@
       } else {
           connectButton.addEventListener('click', () => {
               if (isMobile()) {
-                  // Try opening Phantom app on mobile
-                  window.location.href = "phantom://open";
-                  // Fallback: Open Phantom download page if not installed
-                  setTimeout(() => {
-                      window.location.href = "https://phantom.app";
-                  }, 2000);
+                  // Mobile connection using Universal Links
+                  const redirectUrl = encodeURIComponent(window.location.href);
+                  window.location.href = `https://phantom.app/ul/v1/connect?app_url=${redirectUrl}`;
               } else {
                   Swal.fire({
                       title: 'Phantom Wallet Not Found',
@@ -183,7 +186,6 @@
       }
   });
   
-    
   </script>
 
 </html>
