@@ -102,24 +102,29 @@
       async function connectWallet() {
           try {
               if (isMobile()) {
-                  // Redirect back to the original website after connection
+                  // Get the current URL to redirect back after connecting
                   const redirectUrl = encodeURIComponent(window.location.href);
   
-                  // Phantom Mobile Deep Link for connecting
-                  window.location.href = `https://phantom.app/ul/v1/connect?app_url=${redirectUrl}&dapp_encryption_public_key=&cluster=mainnet-beta`;
+                  // Open Phantom mobile app to connect
+                  window.location.href = `https://phantom.app/ul/v1/connect?redirect_link=${redirectUrl}&dapp_encryption_public_key=`;
   
                   return;
               }
   
-              // Desktop connection via solana-web3.js
-              const response = await window.solana.connect();
+              // Desktop: Connect via Phantom Extension
+              const { solana } = window;
+              if (!solana || !solana.isPhantom) {
+                  throw new Error('Phantom Wallet is not installed.');
+              }
+  
+              const response = await solana.connect();
               publicKey = response.publicKey.toString();
               updateUI(publicKey);
           } catch (err) {
-              console.error('Error connecting to wallet:', err);
+              console.error('Wallet connection error:', err);
               Swal.fire({
-                  title: 'Error!',
-                  text: 'Error connecting to wallet: ' + err.message,
+                  title: 'Connection Failed',
+                  text: err.message,
                   icon: 'error',
                   confirmButtonText: 'OK'
               });
@@ -149,43 +154,26 @@
           });
       }
   
-      if (window.solana && window.solana.isPhantom) {
-          connectButton.addEventListener('click', async () => {
-              if (!publicKey) {
-                  await connectWallet();
-              } else {
-                  disconnectWallet();
-              }
-          });
+      connectButton.addEventListener('click', async () => {
+          if (!publicKey) {
+              await connectWallet();
+          } else {
+              disconnectWallet();
+          }
+      });
   
-          connectButton.addEventListener('mouseover', () => {
-              if (publicKey) {
-                  connectButton.textContent = 'Disconnect';
-              }
-          });
+      connectButton.addEventListener('mouseover', () => {
+          if (publicKey) {
+              connectButton.textContent = 'Disconnect';
+          }
+      });
   
-          connectButton.addEventListener('mouseout', () => {
-              if (publicKey) {
-                  const shortenedAddress = `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`;
-                  connectButton.textContent = shortenedAddress;
-              }
-          });
-      } else {
-          connectButton.addEventListener('click', () => {
-              if (isMobile()) {
-                  // Mobile connection using Phantom Universal Link
-                  const redirectUrl = encodeURIComponent(window.location.href);
-                  window.location.href = `https://phantom.app/ul/v1/connect?app_url=${redirectUrl}&cluster=mainnet-beta`;
-              } else {
-                  Swal.fire({
-                      title: 'Phantom Wallet Not Found',
-                      text: 'Please install the Phantom wallet extension.',
-                      icon: 'warning',
-                      confirmButtonText: 'OK'
-                  });
-              }
-          });
-      }
+      connectButton.addEventListener('mouseout', () => {
+          if (publicKey) {
+              const shortenedAddress = `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`;
+              connectButton.textContent = shortenedAddress;
+          }
+      });
   });
   
   </script>
