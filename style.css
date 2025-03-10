@@ -475,7 +475,7 @@ footer {
         position: fixed;
         top: 0;
         right: -100%;
-        width: 40%;
+        /* width: 40%; */
         height: 100vh;
         padding: 4rem 2rem;
         background: rgb(0 0 0 / 95%);
@@ -488,7 +488,7 @@ footer {
         right: 0;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        /* justify-content: center; */
         align-items: center;
     }
 
@@ -534,9 +534,7 @@ canvas {
 }
 
 .swal2-popup.swal2-modal.swal2-icon-success.swal2-show {
-    background: #00000085;
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
+    background: #000000cf;
 }
 
 .swal2-success-circular-line-left {
@@ -559,14 +557,10 @@ button.swal2-confirm.swal2-styled {
 
 span.swal2-success-line-tip {
     background-color: #ffffff !important;
-    !i;
-    !;
 }
 
 span.swal2-success-line-long {
     background-color: #fff !important;
-    !i;
-    !;
 }
 
 .swal2-icon.swal2-success.swal2-icon-show {
@@ -576,6 +570,9 @@ span.swal2-success-line-long {
 
 div#swal2-html-container {
     display: none !important;
-    !i;
-    !;
+}
+
+.swal2-container.swal2-center.swal2-backdrop-show {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
 }
