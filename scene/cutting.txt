@@ -1,0 +1,1 @@
+<model-viewer src="enchanted_crystal.glb" scene-viewer quick-look" camera-controls tone-mapping="aces" poster="poster.webp" shadow-intensity="2" exposure="2" shadow-softness="0.59" auto-rotate> </model-viewer>

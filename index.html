@@ -28,26 +28,29 @@
 
 <body>
   <!-- Header -->
- <nav class="navbar" id="navbar">
-  <div class="container">
-    <div class="logo">𐍆𐌹𐌽𐌹𐍄𐌴<sup>®</sup></div>
-    <div class="menu-btn" id="menu-btn">
-      <i class="fa-solid fa-bars"></i>
-    </div>
-    <div class="nav-menu" id="nav-menu">
-      <div class="close-btn" id="nav-close-btn">
-        <i class="fa-solid fa-xmark"></i>
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <div class="logo">𐍆𐌹𐌽𐌹𐍄𐌴<sup>♦</sup></div>
+      <div class="menu-btn" id="menu-btn">
+        <i class="fa-solid fa-bars"></i>
       </div>
-      <a href="#" id="connectbutton">Connect</a>
-      <a href="#" class="stake">Stake</a>
-      <a href="#" class="login"><img src="dex.png" class="dex" alt="dex">6LkA...i8Fh</a>
+      <div class="nav-menu" id="nav-menu">
+        <div class="close-btn" id="nav-close-btn">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+        <a href="#" id="connectbutton">Connect</a>
+        <a href="#" class="stake">Stake</a>
+        <a href="#" class="stake" id="about-modal">About</a>
+        <a href="#" class="login"><img src="dex.png" class="dex" alt="dex">6LkA...i8Fh</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
 
   <div id="three-container" class="three-container">
-    <model-viewer src="genesis.glb" scene-viewer quick-look" camera-controls tone-mapping="agx" poster="poster.webp" shadow-intensity="1.23" exposure="2" shadow-softness="1" auto-rotate autoplay> </model-viewer>
+    <model-viewer src="genesis.glb" scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp"
+      shadow-intensity="1.24" auto-rotate camera-orbit="-5.76deg 82.49deg 2577m" field-of-view="22.98deg"
+      exposure="1.07" shadow-softness="0.89" autoplay> </model-viewer>
   </div>
 
   <div class="main-search-container">
@@ -60,15 +63,101 @@
           <div class="loader">
             <div class="loader_item loader_item_neon"></div>
             <div class="loader_item loader_item_glowing"></div>
-            <span class="char-count">Genesis</span>
+            <span class="char-count"></span>
+            <span class="char-text">
+              <circle>●</circle> Genesis
+            </span>
           </div>
         </div>
         <button class="submit-button" disabled>Claim</button>
       </div>
     </div>
   </div>
+  <!-- Add this HTML section just before the closing body tag -->
+  <div class="modal__container" id="modal-container">
+    <div class="modal__content">
+      <i class="fa-solid fa-xmark modal__close close-modal"></i>
 
-<footer>
+      <div class="status-container">
+        <h2 class="modal__title">Status</h2>
+
+        <div class="evolution-stages">
+          <div class="stage-item current">
+            <span class="stage-name">Current Stage</span>
+            <span class="stage-badge">
+              <circle>●</circle> Genesis
+            </span>
+
+            <div class="progress-container">
+              <div class="progress-bar new-progress-bar" style="width: 0%;"></div>
+            </div>
+            <span class="progress-text">In Progress 0%</span>
+          </div>
+          <div class="stage-item-progress">
+            <span class="stage-name-progress">Genesis</span>
+            <span class="stage-status-progress"><i class="fa-solid fa-star"></i> In progress</span>
+          </div>
+
+          <div class="stage-item locked">
+            <span class="stage-name">Transportation</span>
+            <span class="stage-status"><i class="fa-solid fa-lock"></i> Locked</span>
+          </div>
+          <div class="stage-item locked">
+            <span class="stage-name">Mining</span>
+            <span class="stage-status"><i class="fa-solid fa-lock"></i> Locked</span>
+          </div>
+
+          <div class="stage-item locked">
+            <span class="stage-name">Faceting</span>
+            <span class="stage-status"><i class="fa-solid fa-lock"></i> Locked</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- About Modal -->
+  <div class="modal__container" id="about-modal-container">
+    <div class="modal__content">
+      <i class="fa-solid fa-xmark modal__close close-modal"></i>
+
+      <div class="status-container">
+        <h2 class="modal__title">About Us</h2>
+        <div class="faq-item">
+          <button class="faq-question">
+            What is FINITE?
+            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+          </button>
+          <div class="faq-answer">
+            <p>FINITE is a platform for the rarest digital assets, providing a unique experience for collectors and
+              enthusiasts.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            How do I connect my wallet?
+            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+          </button>
+          <div class="faq-answer">
+            <p>You can connect your wallet by clicking the "Connect" button in the navigation bar. Follow the prompts to
+              connect your wallet securely.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            What are the stages of evolution?
+            <i class="fa-solid fa-chevron-down faq-chevron"></i>
+          </button>
+          <div class="faq-answer">
+            <p>The stages of evolution include Genesis, Transportation, Mining, and Faceting. Each stage represents a
+              different phase in the lifecycle of a digital asset.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
     <div class="footer-container">
       <div class="footer-links">
         <a href="#" aria-label="Twitter">
@@ -79,83 +168,85 @@
           <i class="fa-brands fa-telegram" aria-hidden="true"></i>
           <span>Telegram</span>
         </a>
-        <button class="modal__button" id="open-modal">
-          <i class="fa-solid fa-file" aria-hidden="true"></i>
-          <span>Docs</span>
-        </button>
+        <button id="status-link" aria-label="Status">
+          <i class="fa-solid fa-square-poll-horizontal"></i>
+          <span>Status</span>
       </div>
       <div class="footer-credits">
         Building with <img src="sol.png" class="sol" alt="sol"> | <span id="current-year">2025</span> FINITE
       </div>
     </div>
   </footer>
-
   <script type="module" src="script.js"></script>
- <script>
-  document.addEventListener('DOMContentLoaded', async () => {
-    const connectButton = document.getElementById('connectbutton');
-    let publicKey = null;
+  <script type="module" src="modal.js"></script>
+  <script type="module" src="progressbar.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const connectButton = document.getElementById('connectbutton');
+      let publicKey = null;
 
-    async function connectWallet() {
-      if (window.solana && window.solana.isPhantom) {
-        try {
-          const response = await window.solana.connect();
-          publicKey = response.publicKey.toString();
+      async function connectWallet() {
+        if (window.solana && window.solana.isPhantom) {
+          try {
+            const response = await window.solana.connect();
+            publicKey = response.publicKey.toString();
+            const shortenedAddress = `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`;
+            connectButton.textContent = shortenedAddress;
+            Swal.fire({
+              title: 'Connected!',
+              text: 'Wallet connected successfully.',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            });
+          } catch (err) {
+            console.error('Error connecting to wallet:', err);
+            Swal.fire({
+              title: 'Error!',
+              text: 'Error connecting to wallet: ' + err.message,
+              icon: 'error',
+              confirmButtonText: 'OK'
+            });
+          }
+        } else {
+          // Redirect to Phantom app for mobile connection
+          const appUrl = encodeURIComponent('https://finite-one.vercel.app/');
+          window.location.href = `https://phantom.app/ul/v1/connect?app_url=${appUrl}`;
+        }
+      }
+
+      function disconnectWallet() {
+        publicKey = null;
+        connectButton.textContent = 'Connect';
+        Swal.fire({
+          title: 'Disconnected!',
+          text: 'Wallet disconnected successfully.',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
+      }
+
+      connectButton.addEventListener('click', async () => {
+        if (!publicKey) {
+          await connectWallet();
+        } else {
+          disconnectWallet();
+        }
+      });
+
+      connectButton.addEventListener('mouseover', () => {
+        if (publicKey) {
+          connectButton.textContent = 'Disconnect';
+        }
+      });
+
+      connectButton.addEventListener('mouseout', () => {
+        if (publicKey) {
           const shortenedAddress = `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`;
           connectButton.textContent = shortenedAddress;
-          Swal.fire({
-            title: 'Connected!',
-            text: 'Wallet connected successfully.',
-            icon: 'success',
-            confirmButtonText: 'OK'
-          });
-        } catch (err) {
-          console.error('Error connecting to wallet:', err);
-          Swal.fire({
-            title: 'Error!',
-            text: 'Error connecting to wallet: ' + err.message,
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
         }
-      } else {
-        // Redirect to Phantom app for mobile connection
-        const appUrl = encodeURIComponent('https://sohaib110.github.io/web3-solana/');
-        window.location.href = `https://phantom.app/ul/v1/connect?app_url=${appUrl}`;
-      }
-    }
-
-    function disconnectWallet() {
-      publicKey = null;
-      connectButton.textContent = 'Connect';
-      Swal.fire({
-        title: 'Disconnected!',
-        text: 'Wallet disconnected successfully.',
-        icon: 'success',
-        confirmButtonText: 'OK'
       });
-    }
-
-    connectButton.addEventListener('click', async () => {
-      if (!publicKey) {
-        await connectWallet();
-      } else {
-        disconnectWallet();
-      }
     });
+  </script>
+</body>
 
-    connectButton.addEventListener('mouseover', () => {
-      if (publicKey) {
-        connectButton.textContent = 'Disconnect';
-      }
-    });
-
-    connectButton.addEventListener('mouseout', () => {
-      if (publicKey) {
-        const shortenedAddress = `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`;
-        connectButton.textContent = shortenedAddress;
-      }
-    });
-  });
-</script>
 </html>

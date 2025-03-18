@@ -23,7 +23,7 @@
     box-sizing: border-box;
     font-family: "Space Grotesk", serif;
     font-optical-sizing: auto;
-    font-weight: <weight>;
+    font-weight: 400;
     font-style: normal;
 }
 
@@ -38,14 +38,10 @@ body {
     border-bottom: 1px solid #3636361a;
     position: fixed;
     width: 100%;
-    z-index: 50;
+    z-index: 9900;
     transition: all 0.3s ease-in-out;
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
-}
-
-.navbar.scrolled {
-    /* background-color: #111111; */
 }
 
 .navbar .container {
@@ -118,18 +114,14 @@ body {
 }
 
 footer {
-    /* left: 0;
-    bottom: 0; */
     color: white;
     padding: 2rem 1rem;
     margin-top: auto;
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
+    position: fixed;
     left: 0;
     bottom: 0;
-    position: fixed;
-    /* left: 0;
-    bottom: 0; */
     width: 100%;
 }
 
@@ -201,7 +193,7 @@ footer {
     justify-content: center;
     gap: 10px;
     border: 1px solid #fafafa21;
-    webkit-backdrop-filter: blur(12px);
+    --webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
 }
 
@@ -218,11 +210,10 @@ footer {
 /* Loader covering entire inner field */
 .loader {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    inset: 0;
+    /* top:0; bottom:0; left:0; right:0; */
     display: flex;
     align-items: center;
-    justify-content: center;
     border-radius: 12px;
     overflow: hidden;
 }
@@ -231,27 +222,53 @@ footer {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: #fafafa21;
     border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .loader_item_glowing {
-    background-color: rgb(255 255 255 / 5%);
-    z-index: 2;
-}
-
-.loader_item_neon {
     background: linear-gradient(135deg, #00b7ff, #00ff88);
     filter: blur(12px);
-    width: 120%;
-    transform: translateX(-100%);
-    animation: neon-glow 4s linear infinite alternate;
+    z-index: 2;
+    width: 0%;  /* Start from zero */
+    height: 100%;
+    transition: width 1s linear; /* Smooth width transition */
 }
 
-@keyframes neon-glow {
-    100% {
-        transform: translateX(0%);
-    }
+/* The "neon" bar that moves from left to right as time passes */
+.loader_item_neon {
+    /* background: linear-gradient(135deg, #00b7ff, #00ff88); */
+    width: 120%;
+    /* We'll move from -100% to 0% in JS */
+    transform: translateX(0%);
+    transition: transform 1s linear;
+}
+
+.search-icon {
+    margin-right: 8px;
+    color: #fff;
+}
+
+.char-count {
+    position: relative;
+    z-index: 3;
+    /* so text is above glowing backgrounds */
+    color: #fff;
+    font-weight: 600;
+}
+
+.submit-button {
+    border-radius: 8px;
+    padding: 8px 12px;
+    border: none;
+    background: #666;
+    color: #fff;
+    cursor: pointer;
+}
+
+.submit-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 /* Icon styles */
@@ -265,7 +282,6 @@ footer {
     z-index: 3;
 }
 
-/* Genesis text */
 /* Genesis text - align right */
 .char-count {
     color: #aaa;
@@ -277,16 +293,6 @@ footer {
     margin-right: 10px;
 }
 
-
-/* Button */
-.submit-button {
-    background: #222;
-    color: #777;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: not-allowed;
-}
 
 /* Submit button */
 .submit-button {
@@ -311,6 +317,19 @@ footer {
 }
 
 /* Modal CSS */
+#status-link {
+    background-color: transparent;
+    border: none;
+    color: #aaa;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+    font-size: 0.7rem;
+    cursor: pointer;
+}
+
 .modal {
     height: 100vh;
     display: grid;
@@ -347,35 +366,20 @@ footer {
     z-index: var(--z-modal);
     visibility: hidden;
     opacity: 0;
-
-    /*=== Effect 3 ===*/
-    /* perspective: 1000px; */
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(4px);
 }
 
 .modal__content {
     position: relative;
-    background-color: #000000;
+    background-color: #000000cf;
     text-align: center;
-    padding: 3rem 2rem 2rem;
+    padding: 10px;
     border-radius: 1rem 1rem 0 0;
     transition: all .3s;
-
-    /*=== Effect 1 ===*/
     transform: translateY(10%);
-
-    /*=== Effect 2 ===*/
-    /* transform: scale(.5) translateY(10%); */
-
-    /*=== Effect 3 ===*/
-    /* transform: rotateX(65deg) scale(.75) translateY(10%);
-  transform-origin: 50% 100%; */
-}
-
-.modal__img {
-    width: 150px;
-    margin-bottom: .75rem;
+    z-index: 100;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid #060606;
 }
 
 .modal__close {
@@ -384,17 +388,17 @@ footer {
     color: #FFF;
     font-size: 1.5rem;
     position: absolute;
-    top: 2rem;
-    right: 2rem;
+    top: 1rem;
+    right: 1rem;
     cursor: pointer;
     transition: .3s;
     padding: 5px;
 }
 
 .modal__title {
-    font-size: var(--big-font-size);
-    color: var(--title-color);
-    font-weight: 500;
+    font-size: 1rem;
+    color: white;
+    padding: 13px;
 }
 
 .modal__description {
@@ -419,25 +423,164 @@ footer {
 .show-modal {
     visibility: visible;
     opacity: 1;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
 }
 
 .show-modal .modal__content {
-    /*=== Effect 1 ===*/
     transform: translateY(0);
-
-    /*=== Effect 2 ===*/
-    /* transform: scale(1) translateY(0); */
-
-    /*=== Effect 3 ===*/
-    /* transform: rotateX(0) scale(1) translateY(0); */
 }
 
+/* Add these styles to your existing CSS */
+.evolution-stages {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.stage-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stage-name {
+    color: #fff;
+    /* font-weight: 500; */
+}
+
+.stage-item.completed .stage-name {
+    color: #0dcc7b;
+    font-size: 0.7rem;
+}
+
+.stage-item.current .stage-name {
+    color: white;
+    font-size: 0.7rem;
+}
+
+.stage-item.locked .stage-name {
+    color: #aaa;
+    font-size: 0.7rem;
+}
+
+.stage-status {
+    color: #aaa;
+    font-size: 0.7rem;
+}
+
+.stage-item.completed .stage-status {
+    color: #0dcc7b;
+}
+
+.stage-badge {
+    color: white;
+    background-color: rgb(18 18 18);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    margin-left: 0.5rem;
+}
+
+.progress-container {
+    width: 100%;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    margin-top: 0.75rem;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #0dcc7b;
+    border-radius: 3px;
+}
+
+.progress-text {
+    color: #aaa;
+    font-size: 0.7rem;
+    margin-top: 0.25rem;
+    display: block;
+    width: 100%;
+    text-align: right;
+}
+
+.traits-section {
+    margin-top: 2rem;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    width: 100%;
+}
+
+.traits-section h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+
+}
+/* Accordion  */
+.faq-item {
+    margin-bottom: 1rem;
+    background-color: #1e1e1e;
+    border-radius: 4px;
+}
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: #1e1e1e;
+}
+
+.faq-answer p {
+    padding: 1rem;
+    color: #aaa;
+    font-size: 0.8rem;
+    margin: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.faq-chevron {
+    transition: transform 0.3s ease;
+    color: #aaa;
+    font-size: 0.8rem;
+}
+
+.faq-question.active .faq-chevron {
+    transform: rotate(180deg);
+}
+
+.faq-question {
+    width: 100%;
+    padding: 1rem;
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 /*=============== BREAKPOINTS ===============*/
 /* For small devices */
 @media screen and (min-width: 576px) {
     .modal__content {
         margin: auto;
-        width: 380px;
+        width: 42%;
         border-radius: 1.25rem;
     }
 
@@ -448,13 +591,8 @@ footer {
 
 @media (max-width: 768px) {
     .search-container {
-        /* position: relative; */
         bottom: 20%;
         padding: 10px 12px;
-    }
-
-    .search-box {
-        /* flex-direction: column; */
     }
 
     .submit-button {
@@ -475,21 +613,21 @@ footer {
         position: fixed;
         top: 0;
         right: -100%;
-        /* width: 40%; */
         height: 100vh;
+        z-index: 9999;
         padding: 4rem 2rem;
         background: rgb(0 0 0 / 95%);
         -webkit-backdrop-filter: blur(12px);
         backdrop-filter: blur(12px);
         transition: 0.3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+     /* justify-content: center; */
+        align-items: center;
     }
 
     .nav-menu.active {
         right: 0;
-        display: flex;
-        flex-direction: column;
-        /* justify-content: center; */
-        align-items: center;
     }
 
     .nav-menu .close-btn {
@@ -575,4 +713,68 @@ div#swal2-html-container {
 .swal2-container.swal2-center.swal2-backdrop-show {
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
+}
+
+.swal2-popup.swal2-modal.swal2-icon-error.swal2-show {
+    background: #000000cf;
+}
+
+.swal2-icon.swal2-error.swal2-icon-show {
+    border-color: #fff;
+    color: #fff;
+}
+
+span.swal2-x-mark-line-right {
+    background-color: #ffffff !important;
+}
+
+span.swal2-x-mark-line-left {
+    background-color: #ffffff !important;
+}
+
+circle {
+    color: #0dcc7b;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.stage-item-progress {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+span.stage-name-progress {
+    color: #aaa;
+    font-size: 0.7rem;
+}
+
+span.stage-status-progress {
+    color: #FFEB3B;
+    font-size: 0.7rem;
+}
+
+span.char-count {
+    display: none;
+}
+
+span.char-text {
+    color: #aaa;
+    font-size: 0.7rem;
+    position: absolute;
+    right: 10px;
+    z-index: 3;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+
+sup {
+    font-size: 0.7rem;
+    letter-spacing: 0px;
+    color: #0dcc7b;
 }

@@ -1,0 +1,1 @@
+<model-viewer src="diamond.glb" scene-viewer quick-look" camera-controls tone-mapping="neutral" poster="poster.webp" shadow-intensity="0.93" auto-rotate exposure="0.83" shadow-softness="0.71"> </model-viewer>

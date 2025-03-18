@@ -1,21 +1,20 @@
 // Import statements will be handled by adding type="module" to your script tag in HTML
 // Make sure your script tag looks like: <script type="module" src="script.js"></script>
-
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 
 // ===== NAVIGATION MENU =====
+// Navigation Menu Toggle
 const menuBtn = document.getElementById("menu-btn");
 const navMenu = document.getElementById("nav-menu");
-const navcloseBtn = document.getElementById("nav-close-btn");
+const navCloseBtn = document.getElementById("nav-close-btn");
 
 menuBtn.addEventListener("click", () => {
   navMenu.classList.add("active");
 });
 
-navcloseBtn.addEventListener("click", () => {
+navCloseBtn.addEventListener("click", () => {
   navMenu.classList.remove("active");
 });
 
@@ -25,10 +24,7 @@ document.addEventListener("click", (e) => {
     navMenu.classList.remove("active");
   }
 });
-disconnectButton.addEventListener("click", () => {
-  disconnectWallet();
-  navMenu.classList.remove("active");
-});
+
 window.addEventListener("scroll", () => {
   if (window.scrollY > 10) {
     navbar.classList.add("scrolled");
@@ -37,9 +33,6 @@ window.addEventListener("scroll", () => {
   }
 });
 
-menuBtn.addEventListener("click", () => {
-  navMenu.classList.toggle("active");
-});
 // Footer
 document.getElementById("current-year").textContent = new Date().getFullYear();
 
@@ -107,7 +100,7 @@ function init() {
 
   // Update path as needed. If your diamond is in "public/diamond/scene.gltf":
   loader.load(
-    "diamond/scene.gltf",
+    "genesis.glb",
     (gltf) => {
       diamond = gltf.scene;
 
@@ -212,32 +205,74 @@ function init() {
 
 init();
 
-/*=============== SHOW MODAL ===============*/
-const showModal = (openButton, modalContent) => {
-  const openBtn = document.getElementById(openButton),
-    modalContainer = document.getElementById(modalContent);
 
-  if (openBtn && modalContainer) {
-    openBtn.addEventListener("click", () => {
-      modalContainer.classList.add("show-modal");
+// Connect Wallet
+document.addEventListener("DOMContentLoaded", async () => {
+  const connectButton = document.getElementById("connectbutton");
+  let publicKey = null;
+
+  async function connectWallet() {
+    if (window.solana && window.solana.isPhantom) {
+      try {
+        const response = await window.solana.connect();
+        publicKey = response.publicKey.toString();
+        const shortenedAddress = `${publicKey.slice(0, 4)}...${publicKey.slice(
+          -4
+        )}`;
+        connectButton.textContent = shortenedAddress;
+        Swal.fire({
+          title: "Connected!",
+          text: "Wallet connected successfully.",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+      } catch (err) {
+        console.error("Error connecting to wallet:", err);
+        Swal.fire({
+          title: "Error!",
+          text: "Error connecting to wallet: " + err.message,
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      }
+    } else {
+      // Redirect to Phantom app for mobile connection
+      const appUrl = encodeURIComponent("https://finite-one.vercel.app/");
+      window.location.href = `https://phantom.app/ul/v1/connect?app_url=${appUrl}`;
+    }
+  }
+
+  function disconnectWallet() {
+    publicKey = null;
+    connectButton.textContent = "Connect";
+    Swal.fire({
+      title: "Disconnected!",
+      text: "Wallet disconnected successfully.",
+      icon: "success",
+      confirmButtonText: "OK",
     });
   }
-};
-showModal("open-modal", "modal-container");
 
-/*=============== CLOSE MODAL ===============*/
-const closeBtn = document.querySelectorAll(".close-modal");
+  connectButton.addEventListener("click", async () => {
+    if (!publicKey) {
+      await connectWallet();
+    } else {
+      disconnectWallet();
+    }
+  });
 
-function closeModal() {
-  const modalContainer = document.getElementById("modal-container");
-  modalContainer.classList.remove("show-modal");
-}
-closeBtn.forEach((c) => c.addEventListener("click", closeModal));
+  connectButton.addEventListener("mouseover", () => {
+    if (publicKey) {
+      connectButton.textContent = "Disconnect";
+    }
+  });
 
-// Add functionality to update character count
-const input = document.querySelector(".search-input");
-const charCount = document.querySelector(".char-count");
-
-input.addEventListener("input", function () {
-  charCount.textContent = `${this.value.length}/48`;
+  connectButton.addEventListener("mouseout", () => {
+    if (publicKey) {
+      const shortenedAddress = `${publicKey.slice(0, 4)}...${publicKey.slice(
+        -4
+      )}`;
+      connectButton.textContent = shortenedAddress;
+    }
+  });
 });

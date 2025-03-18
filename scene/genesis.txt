@@ -1,0 +1,1 @@
+<model-viewer src="genesis.glb" scene-viewer quick-look" camera-controls tone-mapping="agx" poster="poster.webp" shadow-intensity="1.23" exposure="2" shadow-softness="1" auto-rotate autoplay> </model-viewer>
